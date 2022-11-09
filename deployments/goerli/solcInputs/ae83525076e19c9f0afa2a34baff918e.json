@@ -1,0 +1,35 @@
+{
+  "language": "Solidity",
+  "sources": {
+    "contracts/Crud.sol": {
+      "content": "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.8;\n\ncontract Crud {\n    struct User {\n        uint256 id;\n        string name;\n    }\n    User[] public users;\n    uint256 public nextId = 1;\n\n    function create(string memory name) public {\n        users.push(User(nextId, name));\n        nextId++;\n    }\n\n    function read(uint256 id) public view returns (uint256, string memory) {\n        uint256 i = find(id);\n        return (users[i].id, users[i].name);\n    }\n\n    function update(uint256 id, string memory name) public {\n        uint256 i = find(id);\n        users[i].name = name;\n    }\n\n    function deleteId(uint256 id) public {\n        uint256 i = find(id);\n        delete users[i];\n    }\n\n    function find(uint256 id) public view returns (uint256) {\n        for (uint256 i = 0; i < users.length; i++) {\n            if (users[i].id == id) {\n                return i;\n            }\n        }\n        revert(\"Users does not exists!\");\n    }\n}\n"
+    }
+  },
+  "settings": {
+    "optimizer": {
+      "enabled": false,
+      "runs": 200
+    },
+    "outputSelection": {
+      "*": {
+        "*": [
+          "abi",
+          "evm.bytecode",
+          "evm.deployedBytecode",
+          "evm.methodIdentifiers",
+          "metadata",
+          "devdoc",
+          "userdoc",
+          "storageLayout",
+          "evm.gasEstimates"
+        ],
+        "": [
+          "ast"
+        ]
+      }
+    },
+    "metadata": {
+      "useLiteralContent": true
+    }
+  }
+}
